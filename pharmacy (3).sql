@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2021 at 08:29 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.14
+-- Generation Time: Feb 02, 2025 at 11:41 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -25,49 +25,40 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `calc_total` (IN `billnum` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `calc_total` (IN `billnum` INT)   BEGIN
     update transaction set totalcost=
 		(select sum(subtotal) from 
 			( select quantity*med_cost as subtotal from med,items where med.sr_no=items.sr_no and billno=billnum) totalbill) where billno=billnum;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `customerCount` ()  NO SQL
-SELECT pincode,COUNT(1) as Frequency FROM customer GROUP BY pincode ORDER BY Frequency DESC$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `customerCount` ()  NO SQL SELECT pincode,COUNT(1) as Frequency FROM customer GROUP BY pincode ORDER BY Frequency DESC$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getCovidvaccine` ()  NO SQL
-SELECT fname, lname,age,pincode,email,username FROM customer where age >=45$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getCovidvaccine` ()  NO SQL SELECT fname, lname,age,pincode,email,username FROM customer where age >=45$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getCustomerlist` ()  NO SQL
-SELECT fname, lname, age, pincode, email, username FROM customer$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getCustomerlist` ()  NO SQL SELECT fname, lname, age, pincode, email, username FROM customer$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getRecentcustomers` ()  NO SQL
-SELECT * FROM userlogs$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getRecentcustomers` ()  NO SQL SELECT * FROM userlogs$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_print_all` ()  NO SQL
-SELECT * FROM transaction$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_print_all` ()  NO SQL SELECT * FROM transaction$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_print_today` ()  NO SQL
-SELECT billno,billdate,totalcost,C_ID FROM transaction where billdate>curdate()$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_print_today` ()  NO SQL SELECT billno,billdate,totalcost,C_ID FROM transaction where billdate>curdate()$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_print_tot_today` ()  NO SQL
-SELECT sum(totalcost) as tot FROM (select totalcost from transaction where billdate>=curdate()) AS T$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_print_tot_today` ()  NO SQL SELECT sum(totalcost) as tot FROM (select totalcost from transaction where billdate>=curdate()) AS T$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_sort_date` ()  NO SQL
-SELECT billno,billdate,totalcost,C_ID
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_sort_date` ()  NO SQL SELECT billno,billdate,totalcost,C_ID
 FROM transaction
 ORDER BY billdate DESC$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_sort_totalcost` ()  NO SQL
-SELECT billno,billdate,totalcost,C_ID FROM transaction ORDER BY totalcost DESC$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_sort_totalcost` ()  NO SQL SELECT billno,billdate,totalcost,C_ID FROM transaction ORDER BY totalcost DESC$$
 
 --
 -- Functions
 --
-CREATE DEFINER=`root`@`localhost` FUNCTION `shelf_life_month` (`date1` DATE, `date2` DATE) RETURNS INT(11) BEGIN
+CREATE DEFINER=`root`@`localhost` FUNCTION `shelf_life_month` (`date1` DATE, `date2` DATE) RETURNS INT(11)  BEGIN
    RETURN month(date2)-month(date1);
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `shelf_life_year` (`date1` DATE, `date2` DATE) RETURNS INT(11) BEGIN
+CREATE DEFINER=`root`@`localhost` FUNCTION `shelf_life_year` (`date1` DATE, `date2` DATE) RETURNS INT(11)  BEGIN
    RETURN year(date2)-year(date1);
 END$$
 
@@ -87,7 +78,7 @@ CREATE TABLE `customer` (
   `email` varchar(40) NOT NULL,
   `username` varchar(40) NOT NULL,
   `password` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer`
@@ -118,7 +109,7 @@ CREATE TABLE `items` (
   `sr_no` int(11) NOT NULL,
   `billno` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `items`
@@ -162,7 +153,7 @@ CREATE TABLE `med` (
   `med_mfg` varchar(145) DEFAULT NULL,
   `rac_loc` varchar(45) DEFAULT NULL,
   `mfg_date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `med`
@@ -197,7 +188,7 @@ CREATE TABLE `transaction` (
   `totalcost` int(11) DEFAULT NULL,
   `billdate` datetime DEFAULT current_timestamp(),
   `C_ID` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `transaction`
@@ -224,7 +215,7 @@ CREATE TABLE `userlogs` (
   `username` varchar(50) NOT NULL,
   `email` text NOT NULL,
   `Date_of_joining` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `userlogs`

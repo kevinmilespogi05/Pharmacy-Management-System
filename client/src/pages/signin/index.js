@@ -8,6 +8,7 @@ import medicine from './images/medicine.png'
 // import {Footer, Heading, Contact, Location, Image} from './signinStyle/FooterElements'
 import Footer from './signinStyle/Footer'
 import axios from 'axios'
+import Swal from 'sweetalert2';
 
 const SignIn = () => {
   const [username, setUsername] = useState("");
@@ -41,25 +42,44 @@ const SignIn = () => {
     //         alert("Invalid ID")
     //       })
 
-    axios.post('http://localhost:1300/signin/authenticate', {
-                username: username,
-                password: password,
+    axios
+    .post('http://localhost:1300/signin/authenticate', {
+      username: username,
+      password: password,
     })
-      .then(res => {
-              if(res.data.login===1){
-                console.log("success")
-                window.location.href='/home';
-              }
-              else
-              {
-                alert("Login failed.")
-              }
+    .then((res) => {
+      if (res.data.login === 1) {
+        // Show SweetAlert on successful login
+        Swal.fire({
+          title: 'Success!',
+          text: 'You have successfully logged in.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => {
+          // Redirect to the home page after the user clicks "OK"
+          window.location.href = '/home';
+        });
+      } else {
+        // Show SweetAlert for login failure
+        Swal.fire({
+          title: 'Login Failed',
+          text: 'Invalid username or password.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
     })
-      .catch(error => {
-                console.log("we have an error in catch",error);
-              alert("Invalid ID")
-    })
-  }
+    .catch((error) => {
+      console.log('We have an error in catch', error);
+      // Show SweetAlert for API errors
+      Swal.fire({
+        title: 'Error',
+        text: 'An error occurred. Please try again later.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    });
+};
 
   return (
     <>

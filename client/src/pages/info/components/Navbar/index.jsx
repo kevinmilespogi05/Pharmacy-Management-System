@@ -27,7 +27,7 @@ const Navbar = ({ toggle }) => {
     <IconContext.Provider value={{ color: '#fff'}}>
       <Nav scrollNav={scrollNav}>
         <NavbarContainer>
-          <NavLogo to='/' onClick={toggleHome}>PMS</NavLogo>
+          <NavLogo to='/' onClick={toggleHome}>DOSE</NavLogo>
           <MobileIcon onClick={toggle}>
             <FaBars />
           </MobileIcon>
@@ -36,11 +36,6 @@ const Navbar = ({ toggle }) => {
               <NavLinks to='about'
               smooth={true} duration={500} spy={true} exact='true' offset={-80}
               >About</NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinksR to={{ pathname: "https://github.com/keshavga1209/DBMS_Project" }} target="_blank"
-              smooth={true} duration={500} spy={true} exact='true' offset={-80}
-              >Source code</NavLinksR>
             </NavItem>
             <NavItem>
               <NavLinks to='services'

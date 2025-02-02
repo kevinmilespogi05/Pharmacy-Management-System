@@ -63,15 +63,6 @@ export const Logout = (
       </ListItemIcon>
       <ListItemText primary="Logout" />
     </ListItem>
-    <ListItem button  onClick={(e) => {
-      e.preventDefault();
-      window.location.href='https://github.com/keshavga1209/Pharmacy_Management';
-      }}>
-      <ListItemIcon >
-        <SettingsIcon/>
-      </ListItemIcon>
-      <ListItemText primary="Contribute" />
-    </ListItem>
   </div>
 );
 
