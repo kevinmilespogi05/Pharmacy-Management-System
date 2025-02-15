@@ -10,7 +10,6 @@ const Sidebar = ({isOpen,toggle}) => {
       <SidebarWrapper>
         <SidebarMenu>
           <SidebarLink to='about' onClick={toggle}>About</SidebarLink>
-          <SidebarLink to={{ pathname: "https://github.com/keshavga1209/DBMS_Project" }} target="_blank" onClick={toggle}>Source code</SidebarLink>
           <SidebarLink to='services' onClick={toggle}>Services</SidebarLink>
           <SidebarLink to='/registration' onClick={toggle}>Sign up</SidebarLink>
         </SidebarMenu>

@@ -16,7 +16,7 @@ const Hero = () => {
         <VideoBg autoPlay loop muted src={Video} type='video/mp4' />
       </HeroBg>
       <HeroContent>
-        <HeroH1> Pharmacy Management System</HeroH1>
+        <HeroH1> DOSE</HeroH1>
         <HeroP>Ensures that appropriate attention and protection is given to all records, and that the evidence and information they contain can be retrieved more efficiently and effectively.</HeroP>
         <HeroBtnWrapper>
           <Button to='/signin' onMouseEnter={onHover} onMouseLeave={onHover} primary='true' dark='true'               smooth={true} duration={500} spy={true} exact='true' offset={-80}>

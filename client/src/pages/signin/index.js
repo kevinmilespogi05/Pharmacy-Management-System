@@ -16,32 +16,6 @@ const SignIn = () => {
 
   const checkUser = () =>{
     console.log(username);
-    // fetch("http://localhost:1300/signin/authenticate",{
-    //         method:"post",
-    //         headers:{
-    //             'Content-Type':'application/json'
-    //         },
-    //         body:JSON.stringify({
-    //             username: username,
-    //             password: password,
-    //         })
-    //     })
-        
-    //     .then(res=>{
-    //           if(res.data.login===1){
-    //             console.log("success")
-    //             // window.location.href='/home';
-    //           }
-    //           else
-    //           {
-    //             alert("Login failed.")
-    //           }
-    //     })
-    //     .catch(err=>{
-    //         console.log("we have an error in catch",err);
-    //         alert("Invalid ID")
-    //       })
-
     axios
     .post('http://localhost:1300/signin/authenticate', {
       username: username,
