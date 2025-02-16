@@ -9,6 +9,16 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { Link } from 'react-router-dom';
+import { 
+  redirectHome, 
+  redirectMed, 
+  redirectCust, 
+  redirectBill, 
+  redirectProfile,
+  logout 
+} from './functions';
 
 export const mainListItems = (
   <div>
@@ -47,6 +57,12 @@ export const mainListItems = (
        e.preventDefault();
        window.location.href='/bills';
     }} />
+    </ListItem>
+    <ListItem button onClick={redirectProfile}>      
+      <ListItemIcon>
+        <AccountCircleIcon />
+      </ListItemIcon>
+      <ListItemText primary="Profile" />
     </ListItem>
   </div>
 );

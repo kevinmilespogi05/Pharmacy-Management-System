@@ -17,7 +17,7 @@ export const FormContent = styled.div`
   flex-direction: column;
 
 `
-export const Form = styled.div`
+export const Form = styled.form`
   background-color: #f2f2f2;
   width: 100%;
   z-index: 1;
@@ -25,7 +25,7 @@ export const Form = styled.div`
   margin: 0 auto;
   padding: 30px 32px;
   border-radius:2px;
-  `
+`
 export const FormH1 = styled.h1`
   font-family: 'Encode Sans Expanded', sans-serif;
   margin-top:10px;
@@ -113,12 +113,12 @@ export const Img = styled.img`
   padding-right: 10;
 `;
 
-export const FormButton = styled(Link)`
+export const FormButton = styled.button`
   font-family: 'Encode Sans Expanded', sans-serif;
   border-radius: 2px;
   background:#038ea1;
   white-space: nowrap;
-  padding: padding: 16px 0px;
+  padding: 16px 0px;
   color:#fff;
   border: none;
   border-radius: 4px;
@@ -134,8 +134,7 @@ export const FormButton = styled(Link)`
   width: 100%;
   &:hover {
     transition: all 0.2s ease-in-out;
-    background: ${({primary}) => (primary ?  '#fff' : 'green')};
-
+    background: ${({primary}) => (primary ? '#fff' : 'green')};
   }
 `
 

@@ -15,6 +15,8 @@ const adminUpdateRoute = require('./routes/adminUpdate');
 const searchcustomerRoute = require('./routes/Searchcustomer');
 const medicineRoute = require('./routes/medicines.js');
 const transactionRoute = require('./routes/transaction.js');
+const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 
 app.use('/register',registerRoute )
 app.use('/signin',loginRoute )
@@ -23,6 +25,8 @@ app.use('/adminUpdate',adminUpdateRoute)
 app.use('/searchcustomer',searchcustomerRoute)
 app.use('/medicines',medicineRoute)
 app.use("/transaction",transactionRoute);
+app.use('/user', authRoutes);
+app.use('/user', profileRoutes);
 
 app.listen(1300, ()=>{
   console.log("listening to 1300")

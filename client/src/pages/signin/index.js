@@ -14,46 +14,65 @@ const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const checkUser = () =>{
-    console.log(username);
-    axios
-    .post('http://localhost:1300/signin/authenticate', {
-      username: username,
-      password: password,
-    })
-    .then((res) => {
-      if (res.data.login === 1) {
+  const checkUser = async (e) => {
+    e.preventDefault(); // Prevent form submission
+    
+    // Validate inputs
+    if (!username.trim() || !password.trim()) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Please enter both username and password',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+      return;
+    }
+
+    try {
+      console.log("Attempting login for:", username);
+      const response = await axios.post('http://localhost:1300/signin/authenticate', {
+        username: username.trim(),
+        password: password.trim(),
+      });
+
+      if (response.data.login === 1) {
+        // Store user ID in localStorage
+        localStorage.setItem('userId', response.data.userId);
+        
         // Show SweetAlert on successful login
-        Swal.fire({
+        await Swal.fire({
           title: 'Success!',
           text: 'You have successfully logged in.',
           icon: 'success',
           confirmButtonText: 'OK',
-        }).then(() => {
-          // Redirect to the home page after the user clicks "OK"
-          window.location.href = '/home';
         });
+        
+        // Redirect to the home page after the user clicks "OK"
+        window.location.href = '/home';
       } else {
         // Show SweetAlert for login failure
         Swal.fire({
           title: 'Login Failed',
-          text: 'Invalid username or password.',
+          text: response.data.message || 'Invalid username or password.',
           icon: 'error',
           confirmButtonText: 'OK',
         });
       }
-    })
-    .catch((error) => {
-      console.log('We have an error in catch', error);
+    } catch (error) {
+      console.log('Login error:', error);
       // Show SweetAlert for API errors
       Swal.fire({
         title: 'Error',
-        text: 'An error occurred. Please try again later.',
+        text: error.response?.data?.message || 'An error occurred. Please try again later.',
         icon: 'error',
         confirmButtonText: 'OK',
       });
-    });
-};
+    }
+  };
+
+  const handleInputChange = (e, setter) => {
+    setter(e.target.value);
+  };
 
   return (
     <>
@@ -67,20 +86,30 @@ const SignIn = () => {
      </ImgWrap>
     <FormWrap>
        <FormContent>
-         <Form>
+         <Form onSubmit={checkUser}>
            <FormH1>Member Login</FormH1>
-           <FormLabel>Username</FormLabel>
-             <FormInput type = 'text' required onChange ={(event) => {setUsername(event.target.value)}}/>
-             <FormLabel>Password</FormLabel>
-             <FormInput type = "password" required onChange ={(event) => {setPassword(event.target.value)}}/>
+           <FormLabel htmlFor="username">Username</FormLabel>
+             <FormInput 
+               id="username"
+               type="text" 
+               required 
+               value={username}
+               onChange={(e) => handleInputChange(e, setUsername)}
+             />
+             <FormLabel htmlFor="password">Password</FormLabel>
+             <FormInput 
+               id="password"
+               type="password" 
+               required 
+               value={password}
+               onChange={(e) => handleInputChange(e, setPassword)}
+             />
              <Tnc>
-              <CheckInput type = "checkbox"></CheckInput>
-              <FormLabel>Remember me</FormLabel>
+              <CheckInput type="checkbox" id="remember"></CheckInput>
+              <FormLabel htmlFor="remember">Remember me</FormLabel>
              </Tnc>
-           <FormButton onClick = {checkUser} >Sign in
-           {/* to = '/home' */}
-           </FormButton>
-           <AddButton to ='/forgotpassword'>Forgot password</AddButton>
+           <FormButton type="submit">Sign in</FormButton>
+           <AddButton to='/forgotpassword'>Forgot password</AddButton>
          </Form>
        </FormContent>
      </FormWrap>

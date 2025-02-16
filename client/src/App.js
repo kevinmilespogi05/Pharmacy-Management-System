@@ -20,6 +20,7 @@ import AllTransactions from './pages/home/Bills/report/fullTable'
 import Getmedtable from './pages/home/Meds/report/fullTable'
 import Getqtytable from './pages/home/Meds/report/qtyTable'
 import GetshelfLife from './pages/home/Meds/report/shelfLife'
+import Profile from './pages/home/customer/Profile'
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
         <Route path = '/stock/expirySort' component={Getmedtable} exact />
         <Route path = '/stock/qtySort' component={Getqtytable} exact />
         <Route path = '/stock/shelfLife' component={GetshelfLife} exact />
+        <Route path = '/profile' component={Profile} exact />
       </Switch>
     </Router>
   );

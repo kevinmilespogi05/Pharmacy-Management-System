@@ -28,7 +28,8 @@
     "recharts": "^2.0.9",
     "styled-components": "^5.2.2",
     "sweetalert2": "^11.15.10",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "webpack": "^5.98.0"
   },
   "scripts": {
     "start": "react-scripts start",
