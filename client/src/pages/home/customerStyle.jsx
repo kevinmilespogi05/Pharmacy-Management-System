@@ -5,18 +5,31 @@ import {Link} from 'react-router-dom'
 
 export const Container = styled.div`
 display: flex;
-flex-wrap : row wrap;
-margin-top:50px;
+flex-wrap: wrap;
+margin-top: 50px;
+
+@media screen and (max-width: 768px) {
+  margin-top: 30px;
+}
 `
 export const Content = styled.div`
 display: flex;
 flex-direction: row;
 width: 100%;
+
+@media screen and (max-width: 768px) {
+  flex-direction: column;
+}
 `
 export const Columnadd = styled.div`
 display: flex;
 flex-direction: column;
 width: 100%;
+padding: 0 15px;
+
+@media screen and (max-width: 768px) {
+  padding: 0 10px;
+}
 `
 export const FrmWrap = styled.div`
 margin:30px;
@@ -85,6 +98,12 @@ export const FrmButton = styled(Link)`
     background: ${({primary}) => (primary ?  '#fff' : 'green')};
 
   }
+
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+    height: 45px;
+    padding: 12px 0px;
+  }
 `
 
 export const Formadd = styled.form`
@@ -147,22 +166,28 @@ left:600px;
 right:200px;
 down:100px;`
 export const FormWrap = styled.div`
-margin:30px;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  
+  @media screen and (max-width: 768px) {
+    padding: 1rem;
+  }
 `
 export const FormContent = styled.div`
-  display: flex;
-  flex-direction: column;
-
-`
-export const Form = styled.div`
-  background-color: #f2f2f2;
   width: 100%;
-  z-index: 1;
-  display: grid;
-  margin: 0 auto;
-  padding: 30px 32px;
-  border-radius:2px;
-  `
+  max-width: 480px;
+`
+export const Form = styled.form`
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  
+  @media screen and (max-width: 768px) {
+    padding: 1rem;
+  }
+`
 export const FormH1 = styled.h1`
   font-family: 'Encode Sans Expanded', sans-serif;
   margin-top:10px;
@@ -199,39 +224,42 @@ export const FormLabel = styled.label`
   color: black;
 `
 export const FormInput = styled.input`
-  padding: 16px 16px;
-  margin-bottom: 32px;
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
   border-radius: 4px;
+  font-size: 16px;
+  
+  @media screen and (max-width: 768px) {
+    padding: 8px;
+    font-size: 14px;
+  }
 `
 
-export const FormButton = styled(Link)`
-  font-family: 'Encode Sans Expanded', sans-serif;
-  border-radius: 2px;
-  background:#038ea1;
-  white-space: nowrap;
-  padding: padding: 16px 0px;
-  color:#fff;
+export const FormButton = styled.button`
+  width: 100%;
+  padding: 12px;
+  background: #038ea1;
+  color: white;
   border: none;
   border-radius: 4px;
-  color: #fff;
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.2s ease-in-out;
-  text-decoration: none;
-  height: 50px;
-  width: 100%;
+  transition: background 0.2s;
+  
   &:hover {
-    transition: all 0.2s ease-in-out;
-    background: ${({primary}) => (primary ?  '#fff' : 'green')};
-
+    background: #026d7a;
+  }
+  
+  @media screen and (max-width: 768px) {
+    padding: 10px;
+    font-size: 14px;
   }
 `
 
 export const ServicesContainer = styled.div`
-  height: 550px;
+  min-height: 550px;
   display: flex;
   border-radius: 2px;
   flex-direction: column;
@@ -240,31 +268,28 @@ export const ServicesContainer = styled.div`
   background-color:#fff;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   transition: all 0.2s ease-in-out;
+  padding: 40px 0;
 
   @media screen and (max-width: 768px) {
-    height: 1100px;
+    min-height: 1100px;
   }
 
   @media screen and (max-width: 480px) {
-    height: 1300px;
+    min-height: 1300px;
   }
- `
+`
 export const ServicesWrapper = styled.div`
     max-width: 1000px;
     margin: 0;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     align-items: center;
-    grid-gap: 16px;
+    grid-gap: 24px;
     padding: 0 50px;
 
     @media screen and (max-width: 1000px) {
-      grid-template-columns: 1fr 1fr;
-  }
-
-    @media screen and (max-width: 786px) {
       grid-template-columns: 1fr;
-      padding: 0 20px;
+      gap: 16px;
   }
 `
 export const ServicesCard = styled.div`
@@ -297,6 +322,12 @@ export const ServicesH1 = styled.h1`
   color: #3f51b5;
   margin-bottom: 30px;
   font-family: 'Encode Sans Expanded', sans-serif;
+  text-align: center;
+
+  @media screen and (max-width: 768px) {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
 
   @media screen and (max-width: 480px) {
     font-size: 2rem;

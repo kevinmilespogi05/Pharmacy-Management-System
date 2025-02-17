@@ -20,6 +20,11 @@ background-image: linear-gradient(to right,#00bf8f,#001510 );
     left: 0;
     z-index: 2;
   }
+
+  @media screen and (max-width: 768px) {
+    height: 100px;
+    padding: 0 15px;
+  }
 `
 export const HeadH1 = styled.h1`
   background: #fff;
@@ -34,5 +39,17 @@ export const HeadH1 = styled.h1`
   }
   @media screen and (max-wodth: 480px) {
     font-size: 20px
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 30px;
+    margin-left: 15px;
+    padding: 10px;
+  }
+
+  @media screen and (max-width: 480px) {
+    font-size: 24px;
+    margin-left: 10px;
+    padding: 8px;
   }
 `

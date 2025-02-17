@@ -127,5 +127,15 @@ export const useStyles = makeStyles((theme) => ({
       transform: 'translateY(-2px)',
       backgroundColor: 'rgba(244, 67, 54, 0.04)',
     }
+  },
+  backButton: {
+    borderRadius: 8,
+    padding: '10px 24px',
+    textTransform: 'none',
+    fontWeight: 600,
+    '&:hover': {
+      transform: 'translateY(-2px)',
+      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+    }
   }
 })); 

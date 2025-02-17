@@ -1,4 +1,14 @@
 import React from "react";
+import {
+  TableContainer,
+  Table,
+  TableCaption,
+  TableHeader,
+  TableBody,
+  TR,
+  TD
+} from './tableStyle';
+
 export default class AllTransactions extends React.Component {
 
   constructor(props) {
@@ -46,35 +56,27 @@ renderTableHeader = () => {
   render() {
     const { users, isLoading, isError } = this.state
 
-    if (isLoading) {
-      return <div>Loading...</div>
-    }
+    if (isLoading) return <div>Loading...</div>
+    if (isError) return <div>Error</div>
 
-    if (isError) {
-      return <div>Error</div>
-    }
-
-    return users.length > 0
-      ? (
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-        <table style={{border: "3px solid black",padding: "20px 16px"}}>
-          <caption style={{border: "3px solid black",padding: "20px 16px"}}><h1><b>TRANSACTION RECORDS </b></h1>
-          Total records : {users[0].length}</caption>
-          <thead style={{backgroundColor: "#FF416C", border: "1px solid black", color: "white"}}>
-            <tr style={{border: "1px solid black", padding: "10px 8px"}}>
-              {this.renderTableHeader()}
-            </tr>
-          </thead>
-          <tbody style={{backgroundColor: "#ffdde1", border: "1px solid blue", textAlign: "center", padding: "10px 8px"}}>
+    return users.length > 0 ? (
+      <TableContainer>
+        <Table>
+          <TableCaption>
+            <h1>TRANSACTION RECORDS</h1>
+            Total records: {users[0].length}
+          </TableCaption>
+          <TableHeader>
+            <TR>{this.renderTableHeader()}</TR>
+          </TableHeader>
+          <TableBody>
             {this.renderTableRows()}
-          </tbody>
-        </table>
-        </div>
-      ) : (
-        <div>
-          No users.
-      </div>
-      )
+          </TableBody>
+        </Table>
+      </TableContainer>
+    ) : (
+      <div>No transactions found.</div>
+    )
   }
 }
           

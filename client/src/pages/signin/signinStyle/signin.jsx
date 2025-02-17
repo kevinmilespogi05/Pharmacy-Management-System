@@ -3,14 +3,28 @@ import {Link} from 'react-router-dom'
 
 export const Container = styled.div`
 display: flex;
-flex-wrap : row wrap;
-margin-top:20px;
+flex-wrap: wrap;
+margin-top: 20px;
+justify-content: center;
+align-items: center;
+min-height: 80vh;
+
+@media screen and (max-width: 768px) {
+  flex-direction: column;
+  align-items: center;
+}
 `
 export const FormWrap = styled.div`
 position: relative;  
 width: 300px;   
-left: 250px;
-bottom:20px;
+margin: 0 auto;
+left: 0;
+bottom: 0;
+
+@media screen and (max-width: 768px) {
+  width: 90%;
+  max-width: 300px;
+}
 `
 export const FormContent = styled.div`
   display: flex;
@@ -94,6 +108,13 @@ export const Createbutton = styled(Link)`
     background: ${({primary}) => (primary ?  '#fff' : 'green')};
 
   }
+
+  @media screen and (max-width: 768px) {
+    margin-left: 0;
+    width: 90%;
+    max-width: 300px;
+    margin: 20px auto;
+  }
 `
 export const Text = styled.span`
 text-align: center;
@@ -105,8 +126,15 @@ export const ImgWrap = styled.div`
   height: 95%;
   position: relative; 
   width: 600px;   
-  left: 100px;
-  top : 30px;
+  left: 0;
+  top: 0;
+  margin: 0 40px;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    max-width: 400px;
+    margin: 20px auto;
+  }
 `;
 export const Img = styled.img`
   width: 100%;

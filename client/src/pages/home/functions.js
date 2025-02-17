@@ -11,28 +11,28 @@ const Functions = () => {
     <ServicesContainer id='services'>
       <ServicesH1>Features</ServicesH1>
       <ServicesWrapper>
-        <LinkR to ='/customer' style = {{textDecoration:'none', color:'black'}}>
+        <LinkR to='/customer' style={{ textDecoration: 'none', color: 'black' }}>
           <ServicesCard>
             <ServicesIcon src={Icon1}/>
             <ServicesH2>CUSTOMER DETAILS</ServicesH2>
             <ServicesP>Create, delete, update and generate reports.</ServicesP>
           </ServicesCard>
         </LinkR>
-        <LinkR to ='/bills' style = {{textDecoration:'none', color:'black'}}>
+        <LinkR to='/bills' style={{ textDecoration: 'none', color: 'black' }}>
           <ServicesCard>
             <ServicesIcon src={Icon2}/>
             <ServicesH2>TRANSACTION RECORDS</ServicesH2>
             <ServicesP>Create, delete, update and generate reports.</ServicesP>
           </ServicesCard>
         </LinkR>
-        <LinkR to ='/medicine' style = {{textDecoration:'none', color:'black'}}>
+        <LinkR to='/medicine' style={{ textDecoration: 'none', color: 'black' }}>
           <ServicesCard>
             <ServicesIcon src={Icon3}/>
             <ServicesH2>MEDICINE RECORDS</ServicesH2>
             <ServicesP>Create, delete, update and generate reports.</ServicesP>
           </ServicesCard>
         </LinkR>
-        <LinkR to ='/profile' style = {{textDecoration:'none', color:'black'}}>
+        <LinkR to='/profile' style={{ textDecoration: 'none', color: 'black' }}>
           <ServicesCard>
             <ServicesIcon src={Icon4}/>
             <ServicesH2>USER PROFILE</ServicesH2>

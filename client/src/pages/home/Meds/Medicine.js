@@ -106,16 +106,28 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+    }
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(1),
+    }
   },
   fixedHeight: {
     height: 240,
   },
+  gridContainer: {
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    }
+  }
 }));
 
 export default function Medicine() {
@@ -167,27 +179,25 @@ export default function Medicine() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* All Medicines */}
+          <Grid container spacing={3} className={classes.gridContainer}>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Medicinedata />
               </Paper>
             </Grid>
-            <Grid item xs={5} md={4} lg={4}>
-             {/* Add customer */}
-             <Content>
-             <Addmedicine/>
-             <Updatemedicine/>
-             <Columnadd>
-             <Searchmedicine/>
-             <Position>
-             {/* <Deletemedicine/> */}
-             </Position>
-             </Columnadd>
-             </Content>
-             </Grid>
-            </Grid>        
+            <Grid item xs={12} sm={12} md={4}>
+              <Content>
+                <Addmedicine/>
+                <Updatemedicine/>
+                <Columnadd>
+                  <Searchmedicine/>
+                  <Position>
+                    {/* <Deletemedicine/> */}
+                  </Position>
+                </Columnadd>
+              </Content>
+            </Grid>
+          </Grid>        
           <Box pt={4}>
             <Copyright />
           </Box>

@@ -1,4 +1,5 @@
 import React from "react";
+import { TableContainer, Table, TD, TR } from "./tableStyle";
 
 export default class GetshelfLife extends React.Component {
 
@@ -31,62 +32,61 @@ async componentDidMount() {
     return this.state.users.map(user => {
       if(user.shelf_life_month<0 || user.shelf_life_year<0) {
         return (
-          <tr key={user.id}>
-          <td>{user.sr_no}</td>
-          <td>{user.med_name}</td>
-          <td style = {{color:"red"}}> <b>EXPIRED! </b></td>
-        </tr>
+          <TR key={user.id}>
+            <TD>{user.sr_no}</TD>
+            <TD>{user.med_name}</TD>
+            <TD style = {{color:"red"}}><b>EXPIRED!</b></TD>
+          </TR>
         )
       }
-      else{
       return (
-        <tr key={user.id}>
-        <td>{user.sr_no}</td>
-        <td>{user.med_name}</td>
-        <td>{user.shelf_life_year} year and {user.shelf_life_month} months </td>
-      </tr>
+        <TR key={user.id}>
+          <TD>{user.sr_no}</TD>
+          <TD>{user.med_name}</TD>
+          <TD>{user.shelf_life_year} year and {user.shelf_life_month} months</TD>
+        </TR>
       )
-      }
     })
   }
-renderTableHeader = () => {
-    return Object.keys(this.state.users[0]).map(attr => <th key={attr}>{attr.toUpperCase()}</th>)
-  }
 
-  
   render() {
     const { users, isLoading, isError } = this.state
 
-    if (isLoading) {
-      return <div>Loading...</div>
-    }
+    if (isLoading) return <div>Loading...</div>
+    if (isError) return <div>Error</div>
 
-    if (isError) {
-      return <div>Error</div>
-    }
-
-    return users.length > 0
-      ? (
-        <table style={{border: "3px solid black",padding: "20px 16px"}}>
-          <caption style={{border: "3px solid black",padding: "20px 16px"}}><h1><b>MEDICINES SORTED BY QUANTITY LEFT</b></h1>
-          Total records : {users.length}</caption>
-          <thead style={{backgroundColor: "#FF416C", border: "1px solid black", color: "white", padding: "10px 8px"}}>
-            <tr style={{border: "1px solid black", padding: "10px 8px"}}>
-              {/* {this.renderTableHeader()} */}
-              <th> sr_no</th>
-              <th> med_name</th>
-              <th> shelf life</th>
-            </tr>
+    return users.length > 0 ? (
+      <TableContainer>
+        <Table>
+          <caption style={{
+            border: "3px solid black",
+            padding: "20px 16px",
+            marginBottom: "1rem"
+          }}>
+            <h1><b>MEDICINES SORTED BY QUANTITY LEFT</b></h1>
+            Total records : {users.length}
+          </caption>
+          <thead style={{
+            backgroundColor: "#FF416C",
+            color: "white"
+          }}>
+            <TR>
+              <TD as="th">SR NO</TD>
+              <TD as="th">MEDICINE NAME</TD>
+              <TD as="th">SHELF LIFE</TD>
+            </TR>
           </thead>
-          <tbody style={{backgroundColor: "#ffdde1", border: "1px solid blue", textAlign: "center", padding: "10px 8px"}}>
+          <tbody style={{
+            backgroundColor: "#ffdde1",
+            textAlign: "center"
+          }}>
             {this.renderTableRows()}
           </tbody>
-        </table>
-      ) : (
-        <div>
-          No users.
-      </div>
-      )
+        </Table>
+      </TableContainer>
+    ) : (
+      <div>No users.</div>
+    )
   }
 }
           

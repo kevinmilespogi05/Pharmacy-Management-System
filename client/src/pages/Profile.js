@@ -278,6 +278,14 @@ const Profile = () => {
                 </Button>
                 <Button
                   variant="outlined"
+                  onClick={() => window.history.back()}
+                  className={classes.backButton}
+                  disabled={loading}
+                >
+                  Go Back
+                </Button>
+                <Button
+                  variant="outlined"
                   color="secondary"
                   onClick={() => {
                     setIsEditing(false);
@@ -291,16 +299,26 @@ const Profile = () => {
                 </Button>
               </>
             ) : (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setIsEditing(true)}
-                startIcon={<EditIcon />}
-                className={classes.editButton}
-                disabled={loading}
-              >
-                Edit Profile
-              </Button>
+              <>
+                <Button
+                  variant="outlined"
+                  onClick={() => window.history.back()}
+                  className={classes.backButton}
+                  disabled={loading}
+                >
+                  Go Back
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setIsEditing(true)}
+                  startIcon={<EditIcon />}
+                  className={classes.editButton}
+                  disabled={loading}
+                >
+                  Edit Profile
+                </Button>
+              </>
             )}
           </Box>
         </form>
