@@ -1,62 +1,117 @@
-import {useState} from 'react';
-import { FrmWrap, FrmContent, Formadd, FormInputadd, FormH1add, FormButtonadd} from '../customerStyle'
+import { useState } from 'react';
+import axios from 'axios';
+import { FormWrap, FormContent, Form, FormInput, FormLabel, FormButton, FormH1 } from '../customerStyle';
 
-const Addmedicine = () => {
-  const [med_name, setMed_name] = useState("");
-  const [qty_left, setQty_left] = useState("");
-  const [med_cost ,setMed_cost] = useState("");
-  const [exp_date,setExp_date] = useState("");
-  const [med_mfg, setMed_mfg] = useState("");
-  const [rac_loc, setRac_loc] = useState("");
-  const [mfg_date, setMfg_date] = useState("");
+const AddMedicine = () => {
+  const [medData, setMedData] = useState({
+    med_name: '',
+    qty_left: 0,
+    med_cost: 0,
+    exp_date: '',
+    med_mfg: '',
+    rac_loc: '',
+    mfg_date: ''
+  });
 
+  const handleChange = (e) => {
+    setMedData({
+      ...medData,
+      [e.target.name]: e.target.value
+    });
+  };
 
-  const addmed = () =>{
-    console.log(med_name);
-    fetch("http://localhost:1300/medicines/stock/insert",{
-            method:"post",
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                med_name:med_name,
-                qty_left : qty_left,
-                med_cost:med_cost,
-                exp_date:exp_date,
-                med_mfg:med_mfg,
-                rac_loc:rac_loc,
-                mfg_date: mfg_date
-            })
-        })
-        // .then(res=> res.json())
-        .then(data=>{
-          console.log(data);
-          console.log("success");
-          alert("Medicine added successfully!");
-        })
-        .catch(err=>{
-            console.log("we have an error in catch",err);
-        })
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('http://localhost:1300/medicines/stock/insert', medData);
+      if (response.data) {
+        alert('Medicine added successfully!');
+        // Clear form
+        setMedData({
+          med_name: '',
+          qty_left: 0,
+          med_cost: 0,
+          exp_date: '',
+          med_mfg: '',
+          rac_loc: '',
+          mfg_date: ''
+        });
       }
+    } catch (error) {
+      alert('Error adding medicine: ' + error.message);
+    }
+  };
 
   return (
-    <>
-     <FrmWrap>
-        <FrmContent>
-          <Formadd onsubmit = "redirectLog(e)">
-            <FormH1add>Add new medicine in stock</FormH1add>
-              <FormInputadd type = 'text' placeholder = "Medicine name" required onChange ={(event) => {setMed_name(event.target.value)}}/>
-              <FormInputadd type = 'number' required placeholder = "Quantity" onChange ={(event) => {setQty_left(event.target.value)}}/>
-              <FormInputadd type = 'number' required placeholder = "Cost" onChange ={(event) => {setMed_cost(event.target.value)}}/>
-              <FormInputadd type = 'date' required title="Expiry date"  onChange ={(event) => {setExp_date(event.target.value)}}/>
-              <FormInputadd type = 'date' required title="Manufacturing Date"  onChange ={(event) => {setMfg_date(event.target.value)}}/>
-              <FormInputadd type = 'text' required placeholder = "Rack Location" onChange ={(event) => {setRac_loc(event.target.value)}}/>
-              <FormInputadd type = 'text' required placeholder = "Manufacturer" onChange ={(event) => {setMed_mfg(event.target.value)}}/>
-            <FormButtonadd onClick = {addmed}>Continue</FormButtonadd> 
-          </Formadd>
-        </FrmContent>
-      </FrmWrap>
-    </>
+    <FormWrap>
+      <FormContent>
+        <Form>
+          <FormH1>Add New Medicine</FormH1>
+          
+          <FormLabel>Medicine Name</FormLabel>
+          <FormInput 
+            name="med_name"
+            value={medData.med_name}
+            onChange={handleChange}
+            required
+          />
+
+          <FormLabel>Quantity</FormLabel>
+          <FormInput 
+            type="number"
+            name="qty_left"
+            value={medData.qty_left}
+            onChange={handleChange}
+            required
+          />
+
+          <FormLabel>Cost</FormLabel>
+          <FormInput 
+            type="number"
+            name="med_cost"
+            value={medData.med_cost}
+            onChange={handleChange}
+            required
+          />
+
+          <FormLabel>Expiry Date</FormLabel>
+          <FormInput 
+            type="date"
+            name="exp_date"
+            value={medData.exp_date}
+            onChange={handleChange}
+            required
+          />
+
+          <FormLabel>Manufacturer</FormLabel>
+          <FormInput 
+            name="med_mfg"
+            value={medData.med_mfg}
+            onChange={handleChange}
+            required
+          />
+
+          <FormLabel>Rack Location</FormLabel>
+          <FormInput 
+            name="rac_loc"
+            value={medData.rac_loc}
+            onChange={handleChange}
+            required
+          />
+
+          <FormLabel>Manufacturing Date</FormLabel>
+          <FormInput 
+            type="date"
+            name="mfg_date"
+            value={medData.mfg_date}
+            onChange={handleChange}
+            required
+          />
+
+          <FormButton onClick={handleSubmit}>Add Medicine</FormButton>
+        </Form>
+      </FormContent>
+    </FormWrap>
   );
-}
-export default Addmedicine;
+};
+
+export default AddMedicine;

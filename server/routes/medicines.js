@@ -14,18 +14,19 @@ router.post("/stock/insert", (req,response)=>{
     const med_mfg = req.body.med_mfg
     const rac_loc = req.body.rac_loc
     const mfg_date = req.body.mfg_date
+    
     let sql = 'INSERT INTO med (med_name, qty_left, med_cost, exp_date, med_mfg, rac_loc, mfg_date) VALUES (?,?,?,?,?,?,?)' 
     
-    db.query(sql, [med_name, qty_left,  med_cost,  exp_date, med_mfg, rac_loc, mfg_date],(err, result)=>{
+    db.query(sql, [med_name, qty_left, med_cost, exp_date, med_mfg, rac_loc, mfg_date],
+      (err, result)=>{
         if(err){
             console.log(err)
+            response.status(400).send("Error adding medicine")
+        } else {
+            response.send("Medicine added successfully")
         }
-        else
-        {
-            response.send("log inserted")
-        }
-    })
-})
+    });
+});
 
 router.put("/stock/update", (req, response)=>{
      const sr_no = req.body.sr_no;
