@@ -7,47 +7,56 @@ export const Container = styled.div`
 display: flex;
 flex-wrap: wrap;
 margin-top: 50px;
-
-@media screen and (max-width: 768px) {
-  margin-top: 30px;
-}
-`
-export const Content = styled.div`
-display: flex;
-flex-direction: row;
-width: 100%;
-
-@media screen and (max-width: 768px) {
-  flex-direction: column;
-}
-`
-export const Columnadd = styled.div`
-display: flex;
-flex-direction: column;
 width: 100%;
 padding: 0 15px;
 
 @media screen and (max-width: 768px) {
+  margin-top: 30px;
   padding: 0 10px;
 }
 `
+export const Content = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+  
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+`
+export const Columnadd = styled.div`
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+`
 export const FrmWrap = styled.div`
-margin:30px;
+  width: 100%;
+  height: 100%;
+  margin: 0;
 `
 export const FrmContent = styled.div`
   display: flex;
   flex-direction: column;
-
+  height: 100%;
 `
 export const Frm = styled.form`
   background-color: black;
   width: 100%;
-  z-index: 1;
-  display: grid;
-  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   padding: 30px 32px;
-  border-radius:2px;
-  `
+  border-radius: 8px;
+`
 export const FrmH1 = styled.h1`
   font-family: 'Encode Sans Expanded', sans-serif;
   margin-top:20px;
@@ -161,41 +170,42 @@ export const FormButtonadd = styled(Link)`
   }
 `
 export const Position = styled.div`
-top:30px;
-left:600px;
-right:200px;
-down:100px;`
-export const FormWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 2rem;
+  margin-top: 20px;
   
   @media screen and (max-width: 768px) {
-    padding: 1rem;
+    margin-top: 15px;
   }
+`
+export const FormWrap = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: 0;
 `
 export const FormContent = styled.div`
-  width: 100%;
-  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `
 export const Form = styled.form`
-  background: #fff;
-  padding: 2rem;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 32px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  
-  @media screen and (max-width: 768px) {
-    padding: 1rem;
-  }
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 `
 export const FormH1 = styled.h1`
-  font-family: 'Encode Sans Expanded', sans-serif;
-  margin-top:10px;
-  margin-bottom:30px;
-  color: black;
-  font-size: 23px;
-  font-weight: 400;
+  font-size: 24px;
+  color: #038ea1;
+  margin-bottom: 20px;
   text-align: center;
+  
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
 `
 
 export const FormH1del = styled.h1`
@@ -218,38 +228,36 @@ export const FormH1delete = styled.h1`
   text-align: center;
 `
 export const FormLabel = styled.label`
-  font-family: 'Encode Sans Expanded', sans-serif;
-  margin-bottom: 8px;
   font-size: 14px;
-  color: black;
+  margin-bottom: 5px;
+  color: #333;
 `
 export const FormInput = styled.input`
-  width: 100%;
   padding: 12px;
-  margin: 8px 0;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 5px;
   font-size: 16px;
+  width: 100%;
   
   @media screen and (max-width: 768px) {
-    padding: 8px;
+    padding: 10px;
     font-size: 14px;
   }
 `
 
 export const FormButton = styled.button`
-  width: 100%;
-  padding: 12px;
   background: #038ea1;
-  color: white;
+  padding: 12px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
+  color: white;
   font-size: 16px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
   
   &:hover {
     background: #026d7a;
+    transform: translateY(-2px);
   }
   
   @media screen and (max-width: 768px) {
@@ -259,89 +267,133 @@ export const FormButton = styled.button`
 `
 
 export const ServicesContainer = styled.div`
-  min-height: 550px;
   display: flex;
-  border-radius: 2px;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  background-color:#fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  transition: all 0.2s ease-in-out;
-  padding: 40px 0;
-
+  padding: 20px;
+  background: #fff;
+  
   @media screen and (max-width: 768px) {
-    min-height: 1100px;
+    padding: 10px;
   }
+`
 
+export const ServicesH1 = styled.h1`
+  font-size: 2.5rem;
+  color: #038ea1;
+  margin-bottom: 40px;
+  text-align: center;
+  
+  @media screen and (max-width: 768px) {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
   @media screen and (max-width: 480px) {
-    min-height: 1300px;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
   }
 `
-export const ServicesWrapper = styled.div`
-    max-width: 1000px;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-    grid-gap: 24px;
-    padding: 0 50px;
 
-    @media screen and (max-width: 1000px) {
-      grid-template-columns: 1fr;
-      gap: 16px;
+export const ServicesWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+  
+  @media screen and (max-width: 768px) {
+    grid-gap: 15px;
+    padding: 0 10px;
   }
 `
+
 export const ServicesCard = styled.div`
   background: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
+  padding: 30px 20px;
   border-radius: 10px;
-  max-height: 340px;
-  padding:  30px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  transition: all 0.2s ease-in-out;
-  border:1px solid #3f51b5;
-
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  height: 100%;
+  
   &:hover {
-    transform: scale(1.02);
-    transition: all 0.2s ease-in-out;
-    cursor:pointer;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
-`
-export const ServicesIcon = styled.img`
-  height: 160px;
-  width: 160px;
-  margin-bottom: 10px;
-
-`
-export const ServicesH1 = styled.h1`
-  font-size: 4rem;
-  color: #3f51b5;
-  margin-bottom: 30px;
-  font-family: 'Encode Sans Expanded', sans-serif;
-  text-align: center;
-
+  
   @media screen and (max-width: 768px) {
-    font-size: 3rem;
-    margin-bottom: 20px;
+    padding: 20px 15px;
   }
-
-  @media screen and (max-width: 480px) {
-    font-size: 2rem;
-  }  
 `
+
+export const ServicesIcon = styled.img`
+  height: 120px;
+  width: 120px;
+  margin-bottom: 20px;
+  
+  @media screen and (max-width: 768px) {
+    height: 100px;
+    width: 100px;
+    margin-bottom: 15px;
+  }
+`
+
 export const ServicesH2 = styled.h2`
-  font-size: 1rem;
-  margin-bottom: 10px;
-  text-decoration: none;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #333;
+  
+  @media screen and (max-width: 768px) {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
 `
 
 export const ServicesP = styled.p`
   font-size: 1rem;
   text-align: center;
-  text-decoration: none;
+  color: #666;
+  line-height: 1.5;
+  
+  @media screen and (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+`
+
+export const TableContainer = styled.div`
+  overflow-x: auto;
+  width: 100%;
+  margin: 20px 0;
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    
+    @media screen and (max-width: 768px) {
+      padding: 8px;
+      font-size: 14px;
+    }
+  }
+  
+  th {
+    background-color: #038ea1;
+    color: white;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f8f8f8;
+  }
 `
 

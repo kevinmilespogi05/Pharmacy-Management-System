@@ -26,12 +26,7 @@ import Searchcustomer from './Searchcustomer'
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://github.com/Alok650/pharmacy-management-system">
-        Pharmacy Management System
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+      {'Copyright © DOSE 2025'}
     </Typography>
   );
 }
@@ -173,20 +168,21 @@ export default function Customer() {
                 <Customerdata />
               </Paper>
             </Grid>
-            <Grid item xs={5} md={4} lg={4}>
-             {/* Add customer */}
-             <Content>
-             <Addcustomer/>
-             <Updatecustomer/>
-             <Columnadd>
-             <Searchcustomer/>
-             <Position>
-             {/* <Deletecustomer/> */}
-             </Position>
-             </Columnadd>
-             </Content>
-             </Grid>
-            </Grid>        
+            
+            {/* Forms section */}
+            <Grid item xs={12}>
+              <Content>
+                <Addcustomer/>
+                <Updatecustomer/>
+                <Columnadd>
+                  <Searchcustomer/>
+                  <Position>
+                    {/* <Deletecustomer/> */}
+                  </Position>
+                </Columnadd>
+              </Content>
+            </Grid>
+          </Grid>        
           <Box pt={4}>
             <Copyright />
           </Box>

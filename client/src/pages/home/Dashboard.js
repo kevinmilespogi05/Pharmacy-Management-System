@@ -20,8 +20,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://github.com/Alok650/pharmacy-management-system">
-        Pharmacy Management System
+      <Link color="inherit" href="https://github.com/kevinmilespogi05">
+        DOSE
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -29,48 +29,27 @@ function Copyright() {
   );
 }
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+    backgroundColor: '#038ea1',
   },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `100%`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+  toolbar: {
+    paddingRight: 24,
+    [theme.breakpoints.down('sm')]: {
+      paddingRight: 10,
+    },
   },
   title: {
     flexGrow: 1,
-  },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
+    fontSize: '1.5rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.2rem',
     },
   },
   appBarSpacer: theme.mixins.toolbar,
@@ -78,62 +57,92 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
+    backgroundColor: '#f5f5f5',
   },
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+    },
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(1.5),
+    },
   },
   fixedHeight: {
     height: 240,
+    [theme.breakpoints.down('sm')]: {
+      height: 200,
+    },
   },
+  logoutIcon: {
+    fontSize: '24px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '20px',
+    },
+  },
+  gridContainer: {
+    [theme.breakpoints.down('sm')]: {
+      spacing: 2,
+    },
+  },
+  copyright: {
+    marginTop: 'auto',
+    padding: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(1),
+    },
+  }
 }));
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
           <IconButton color="inherit">
-            <LinkR to ='/signin' style={{textDecoration:"none", color: "white"}}>
-              <ExitToAppIcon />
+            <LinkR to='/signin' style={{textDecoration:"none", color: "white"}}>
+              <ExitToAppIcon className={classes.logoutIcon} />
             </LinkR>
           </IconButton>
         </Toolbar>
       </AppBar>
+      
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Services*/}
+          <Grid container spacing={3} className={classes.gridContainer}>
+            {/* Services */}
             <Grid item xs={12}>
               <Functions/>
             </Grid>
             {/* Recent Deposits */}
-            <Grid item xs={12} >
+            <Grid item xs={12} sm={12} md={12}>
               <Paper className={fixedHeightPaper}>
-              <Deposits />
+                <Deposits />
               </Paper>
             </Grid>            
           </Grid>
-          <Box pt={4}>
+          
+          <Box className={classes.copyright}>
             <Copyright />
           </Box>
         </Container>

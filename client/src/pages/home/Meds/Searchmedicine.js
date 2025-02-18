@@ -1,89 +1,109 @@
 import {useState} from 'react';
-import {FormWrap, FormH1del, FormContent, Form, FormInput, FormH1, FormLabel, FormButton} from '../customerStyle'
+import {FormWrap, FormContent, Form, FormInput, FormH1, FormLabel, FormButton} from '../customerStyle'
 import axios from 'axios'
-import Divider from '@material-ui/core/Divider';
+import Swal from 'sweetalert2'
 
 const Searchmedicine = () => {
-  var [sr_no, setSr_no] = useState(0);
-  var med_name = ""
-  var qty_left = ""
-  var med_cost = ""
-  var exp_date = ""
-  var med_mfg = ""
-  var rac_loc = ""
-  var mfg_date = ""
-  var Searchmedicin = () =>{
-    console.log(sr_no);
-    axios.post('http://localhost:1300/medicines/stock/search', {      
-      sr_no: sr_no,  
-    })
-      .then(res => {
-              console.log(res);
-              if(res.data){
-                console.log("success")
-                med_name= res.data[0].med_name;
-                qty_left= res.data[0].qty_left;
-                med_cost =res.data[0].med_cost;
-                exp_date= res.data[0].exp_date;
-                med_mfg= res.data[0].med_mfg;
-                rac_loc= res.data[0].rac_loc;
-                mfg_date= res.data[0].mfg_date;
-                alert(`Medicine found! 
-                        \n1. Medicine Name: ${med_name}
-                        \n2. Quantity Left: ${qty_left}
-                        \n3. Price: ${med_cost}
-                        \n4. Expiry Date: ${exp_date}
-                        \n5. Manufacturing Date: ${mfg_date}
-                        \n6. Location on Rack: ${rac_loc}
-                        \n7. Manufacturer: ${med_mfg}
-                        `);
-              }
-              else
-              {
-                alert("Request denied.")
-              }
-    })
-      .catch(error => {
-                console.log("we have an error in catch",error);
-              alert("Invalid ID")
-    })
-  }
+  const [sr_no, setSr_no] = useState(0);
 
-//   const Deletecustomer = () =>{
-//     console.log(username);
-//     axios.post('http://localhost:1300/searchcustomer/admindelete', {
-//                 username: username,
-//     })
-//       .then(res => {
-//               if(res.data.login===1){
-//                 console.log("success")
-//                 alert("Account deleted successfully!")
-//               }
-//               else
-//               {
-//                 alert("Account deleted.")
-//               }
-//     })
-//       .catch(error => {
-//                 console.log("we have an error in catch",error);
-//                 alert("Account deleted.")
-//     })
-//   }
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString();
+  };
+
+  const Searchmedicin = async () => {
+    if (!sr_no) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Input',
+        text: 'Please enter a valid serial number',
+      });
+      return;
+    }
+
+    try {
+      const res = await axios.post('http://localhost:1300/medicines/stock/search', {
+        sr_no: sr_no,
+      });
+
+      if (res.data && res.data[0]) {
+        const medicine = res.data[0];
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'Medicine Found',
+          html: `
+            <div style="text-align: left; padding: 10px;">
+              <div style="margin: 10px 0;">
+                <strong>Medicine Name:</strong> ${medicine.med_name}
+              </div>
+              <div style="margin: 10px 0;">
+                <strong>Quantity Left:</strong> ${medicine.qty_left} units
+              </div>
+              <div style="margin: 10px 0;">
+                <strong>Price:</strong> $${medicine.med_cost}
+              </div>
+              <div style="margin: 10px 0;">
+                <strong>Expiry Date:</strong> ${formatDate(medicine.exp_date)}
+              </div>
+              <div style="margin: 10px 0;">
+                <strong>Manufacturing Date:</strong> ${formatDate(medicine.mfg_date)}
+              </div>
+              <div style="margin: 10px 0;">
+                <strong>Location on Rack:</strong> ${medicine.rac_loc}
+              </div>
+              <div style="margin: 10px 0;">
+                <strong>Manufacturer:</strong> ${medicine.med_mfg}
+              </div>
+            </div>
+          `,
+          customClass: {
+            container: 'custom-swal-container',
+            popup: 'custom-swal-popup',
+            content: 'custom-swal-content'
+          },
+          showConfirmButton: true,
+          confirmButtonColor: '#038ea1',
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Not Found',
+          text: 'Medicine not found in database',
+          confirmButtonColor: '#038ea1',
+        });
+      }
+    } catch (error) {
+      console.error("Error searching medicine:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An error occurred while searching for the medicine',
+        confirmButtonColor: '#038ea1',
+      });
+    }
+  };
+
   return (
-    <>
     <FormWrap>
-       <FormContent>
-         <Form>
-           <FormH1>Search Medicine</FormH1>
-           <FormLabel>Serial Number</FormLabel>
-             <FormInput type = 'text' required onChange ={(event) => {setSr_no(event.target.value)}}/>
-           <FormButton onClick = {Searchmedicin} >Search</FormButton>
-           <Divider/>
-         </Form>
-       </FormContent>
-     </FormWrap>
-   </>
-  )
-}
+      <FormContent>
+        <Form onSubmit={(e) => e.preventDefault()}>
+          <FormH1>Search Medicine</FormH1>
+          <FormLabel>Serial Number</FormLabel>
+          <FormInput
+            type='number'
+            required
+            value={sr_no}
+            onChange={(event) => setSr_no(event.target.value)}
+            placeholder="Enter serial number"
+          />
+          <FormButton type="button" onClick={Searchmedicin}>
+            Search
+          </FormButton>
+        </Form>
+      </FormContent>
+    </FormWrap>
+  );
+};
+
 export default Searchmedicine;
 

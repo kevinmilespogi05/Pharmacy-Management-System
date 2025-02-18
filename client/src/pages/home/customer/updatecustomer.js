@@ -1,75 +1,137 @@
 import {useState} from 'react';
-import {FrmWrap, FrmContent, Frm, FrmInput, FrmH1,FrmButton, ExfrmInput} from './../customerStyle'
-import axios from 'axios'
+import {FrmWrap, FrmContent, Frm, FrmInput, FrmH1, FrmButton, ExfrmInput} from './../customerStyle'
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const Updatecustomer = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [fname, setFirstname] = useState("");
   const [lname, setLastname] = useState("");
   const [age, setAge] = useState("");
   const [pincode, setPincode] = useState("");
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
 
-  const updateCustomer = () =>{
+  const validateForm = () => {
+    if (!username.trim() || !password.trim()) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Credentials Required',
+        text: 'Please enter both username and password',
+        confirmButtonColor: '#038ea1'
+      });
+      return false;
+    }
+
+    if (fname.trim() || lname.trim()) {
+      if (!fname.trim() || !lname.trim()) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid Name',
+          text: 'Please enter both first and last name',
+          confirmButtonColor: '#038ea1'
+        });
+        return false;
+      }
+    }
+
+    if (age && (isNaN(age) || age < 0)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Age',
+        text: 'Please enter a valid age',
+        confirmButtonColor: '#038ea1'
+      });
+      return false;
+    }
+
+    if (pincode && pincode.length !== 4) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Pincode',
+        text: 'Please enter a valid 4-digit pincode',
+        confirmButtonColor: '#038ea1'
+      });
+      return false;
+    }
+
+    if (email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid Email',
+          text: 'Please enter a valid email address',
+          confirmButtonColor: '#038ea1'
+        });
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const updateCustomer = (e) => {
+    e && e.preventDefault(); // Prevent form submission if event exists
+    
+    if (!validateForm()) return;
+
     axios.post('http://localhost:1300/adminUpdate/adminUpdate', {
-                username: username,
-                password: password
+      username,
+      password,
+      fname,
+      lname,
+      age,
+      pincode,
+      email
     })
-      .then(res => {
-              if(res.data.password===1){
-                console.log("success");
-                alert("Request successful")
-                    axios.post('http://localhost:1300/adminUpdate/adminReset', {
-                        fname:fname,
-                        lname:lname,
-                        age: age,
-                        email:email,
-                        pincode: pincode,
-                        username: username,
-                        password: password,
-                        })
-                        .then(res => {
-                            if(res.data.reset===1){
-                              alert("Details updated successfully")
-                        }
-                          else
-                            {
-                              alert("Request denied.")
-                            }
-                      })
-                        .catch(error => {
-                            console.log("we have an error in catch",error);
-                      })}
-              else
-              {
-                alert("Login failed.");
-              }
-            })
-              .catch(error => {
-              console.log("we have an error in catch",error);
-              alert("Invalid data provided")
+    .then(response => {
+      if (response.data.password === 1) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Customer details updated successfully',
+          confirmButtonColor: '#038ea1'
+        });
+        // Clear form
+        setUsername("");
+        setPassword("");
+        setFirstname("");
+        setLastname("");
+        setAge("");
+        setPincode("");
+        setEmail("");
+      } else {
+        throw new Error('Update failed');
+      }
     })
-  }
+    .catch(error => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Update Failed',
+        text: 'Invalid credentials or server error',
+        confirmButtonColor: '#038ea1'
+      });
+    });
+  };
 
   return (
-    <>
-     <FrmWrap>
-        <FrmContent>
-          <Frm onsubmit = "redirectLog(e)">
-            <FrmH1>Update details</FrmH1>
-              <ExfrmInput type = 'text' required placeholder ="Existing username" onChange ={(event) => {setUsername(event.target.value)}}/>
-              <ExfrmInput type = 'password' required placeholder ="Existing password" onChange ={(event) => {setPassword(event.target.value)}}/>
-              <FrmInput type = 'text' required placeholder ="First name" onChange ={(event) => {setFirstname(event.target.value)}}/>
-              <FrmInput type = 'text' required placeholder ="Last name" onChange ={(event) => {setLastname(event.target.value)}}/>
-              <FrmInput type = 'number' required placeholder ="Age" onChange ={(event) => {setAge(event.target.value)}}/>
-              <FrmInput type = 'number' required placeholder ="Pincode" onChange ={(event) => {setPincode(event.target.value)}}/>
-              <FrmInput type = 'email' required placeholder ="Email" onChange ={(event) => {setEmail(event.target.value)}}/>
-            <FrmButton onClick = {updateCustomer}>Continue</FrmButton> 
-          </Frm>
-        </FrmContent>
-      </FrmWrap>
-    </>
+    <FrmWrap>
+      <FrmContent>
+        <Frm>
+          <FrmH1>Update details</FrmH1>
+          <ExfrmInput type="text" required placeholder="Existing username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+          <ExfrmInput type="password" required placeholder="Existing password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+          <FrmInput type="text" placeholder="First name" value={fname} onChange={(e) => setFirstname(e.target.value)}/>
+          <FrmInput type="text" placeholder="Last name" value={lname} onChange={(e) => setLastname(e.target.value)}/>
+          <FrmInput type="number" placeholder="Age" value={age} onChange={(e) => setAge(e.target.value)}/>
+          <FrmInput type="text" placeholder="Pincode" value={pincode} onChange={(e) => setPincode(e.target.value)}/>
+          <FrmInput type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+          <FrmButton type="button" onClick={updateCustomer}>Update</FrmButton>
+        </Frm>
+      </FrmContent>
+    </FrmWrap>
   );
-}
+};
+
 export default Updatecustomer;

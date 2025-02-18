@@ -7,38 +7,54 @@ import {ServicesContainer, ServicesH1, ServicesWrapper, ServicesCard, ServicesIc
 import {Link as LinkR} from 'react-router-dom'
 
 const Functions = () => {
+  const features = [
+    {
+      icon: Icon1,
+      title: "CUSTOMER DETAILS",
+      description: "Create, delete, update and generate reports.",
+      path: "/customer"
+    },
+    {
+      icon: Icon2,
+      title: "TRANSACTION RECORDS",
+      description: "Create, delete, update and generate reports.",
+      path: "/bills"
+    },
+    {
+      icon: Icon3,
+      title: "MEDICINE RECORDS",
+      description: "Create, delete, update and generate reports.",
+      path: "/medicine"
+    },
+    {
+      icon: Icon4,
+      title: "USER PROFILE",
+      description: "View and update your profile information.",
+      path: "/profile"
+    }
+  ];
+
   return (
     <ServicesContainer id='services'>
       <ServicesH1>Features</ServicesH1>
       <ServicesWrapper>
-        <LinkR to='/customer' style={{ textDecoration: 'none', color: 'black' }}>
-          <ServicesCard>
-            <ServicesIcon src={Icon1}/>
-            <ServicesH2>CUSTOMER DETAILS</ServicesH2>
-            <ServicesP>Create, delete, update and generate reports.</ServicesP>
-          </ServicesCard>
-        </LinkR>
-        <LinkR to='/bills' style={{ textDecoration: 'none', color: 'black' }}>
-          <ServicesCard>
-            <ServicesIcon src={Icon2}/>
-            <ServicesH2>TRANSACTION RECORDS</ServicesH2>
-            <ServicesP>Create, delete, update and generate reports.</ServicesP>
-          </ServicesCard>
-        </LinkR>
-        <LinkR to='/medicine' style={{ textDecoration: 'none', color: 'black' }}>
-          <ServicesCard>
-            <ServicesIcon src={Icon3}/>
-            <ServicesH2>MEDICINE RECORDS</ServicesH2>
-            <ServicesP>Create, delete, update and generate reports.</ServicesP>
-          </ServicesCard>
-        </LinkR>
-        <LinkR to='/profile' style={{ textDecoration: 'none', color: 'black' }}>
-          <ServicesCard>
-            <ServicesIcon src={Icon4}/>
-            <ServicesH2>USER PROFILE</ServicesH2>
-            <ServicesP>View and update your profile information.</ServicesP>
-          </ServicesCard>
-        </LinkR>
+        {features.map((feature, index) => (
+          <LinkR 
+            key={index} 
+            to={feature.path} 
+            style={{ 
+              textDecoration: 'none', 
+              color: 'black',
+              width: '100%'
+            }}
+          >
+            <ServicesCard>
+              <ServicesIcon src={feature.icon} alt={feature.title} />
+              <ServicesH2>{feature.title}</ServicesH2>
+              <ServicesP>{feature.description}</ServicesP>
+            </ServicesCard>
+          </LinkR>
+        ))}
       </ServicesWrapper>
     </ServicesContainer>
   )

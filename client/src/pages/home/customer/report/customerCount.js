@@ -1,4 +1,5 @@
 import React from "react";
+import { ResponsiveTableContainer, ResponsiveTable } from './tableStyle';
 
 export default class customercount extends React.Component {
 
@@ -13,7 +14,7 @@ export default class customercount extends React.Component {
 async componentDidMount() {
   this.setState({isLoading: true})
  
-  const response = await fetch("http://localhost:1300/searchcustomer/customerCount")
+  const response = await fetch("http://localhost:1300/searchcustomer/customercount")
 
   if(response.ok)
   {
@@ -28,51 +29,63 @@ async componentDidMount() {
   }
 
   renderTableRows = () => {
-    return this.state.users[0].map(user => {
+    return this.state.users[0].map((user, index) => {
       return (
-        <tr>
+        <tr key={index}>
           <td>{user.pincode}</td>
           <td>{user.Frequency}</td>
         </tr>
       )
     })
   }
-renderTableHeader = () => {
-    return Object.keys(this.state.users[0][0]).map(attr => <th key={attr}>{attr.toUpperCase()}</th>)
+
+  renderTableHeader = () => {
+    return Object.keys(this.state.users[0][0]).map(attr => 
+      <th key={attr}>{attr.toUpperCase()}</th>
+    )
   }
 
-  
   render() {
     const { users, isLoading, isError } = this.state
 
     if (isLoading) {
-      return <div>Loading...</div>
+      return (
+        <ResponsiveTableContainer>
+          <div>Loading...</div>
+        </ResponsiveTableContainer>
+      );
     }
 
     if (isError) {
-      return <div>Error</div>
+      return (
+        <ResponsiveTableContainer>
+          <div>Error loading data</div>
+        </ResponsiveTableContainer>
+      );
     }
 
     return users.length > 0
       ? (
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-        <table style={{border: "3px solid black",padding: "20px 16px", width: "400px"}}>
-          <caption style={{border: "3px solid black",padding: "20px 16px"}}><h1><b>Area wise customer frequency list</b></h1>
-          Total records : {users[0].length}</caption>
-          <thead style={{backgroundColor: "#FF416C", border: "1px solid black", color: "white"}}>
-            <tr style={{border: "1px solid black", padding: "10px 8px"}}>
-              {this.renderTableHeader()}
-            </tr>
-          </thead>
-          <tbody style={{backgroundColor: "#ffdde1", border: "1px solid blue", textAlign: "center", padding: "10px 8px"}}>
-            {this.renderTableRows()}
-          </tbody>
-        </table>
-        </div>
+        <ResponsiveTableContainer>
+          <ResponsiveTable>
+            <caption>
+              <h1><b>Area-wise Customer Frequency</b></h1>
+              <div>Total areas: {users[0].length}</div>
+            </caption>
+            <thead>
+              <tr>
+                {this.renderTableHeader()}
+              </tr>
+            </thead>
+            <tbody>
+              {this.renderTableRows()}
+            </tbody>
+          </ResponsiveTable>
+        </ResponsiveTableContainer>
       ) : (
-        <div>
-          No users.
-      </div>
+        <ResponsiveTableContainer>
+          <div>No data available</div>
+        </ResponsiveTableContainer>
       )
   }
 }

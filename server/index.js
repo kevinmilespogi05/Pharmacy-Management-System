@@ -28,6 +28,15 @@ app.use("/transaction",transactionRoute);
 app.use('/user', authRoutes);
 app.use('/user', profileRoutes);
 
-app.listen(1300, ()=>{
-  console.log("listening to 1300")
-})
+const port = process.env.PORT || 1300;
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+}).on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.log(`Port ${port} is busy, trying ${port + 1}`);
+    app.listen(port + 1);
+  } else {
+    console.error(err);
+  }
+});

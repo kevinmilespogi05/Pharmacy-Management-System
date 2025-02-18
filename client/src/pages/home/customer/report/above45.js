@@ -1,84 +1,98 @@
 import React from "react";
+import { ResponsiveTableContainer, ResponsiveTable } from './tableStyle';
 
 export default class covidvaccine extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-        users:[],
-        isLoading: false,
-        isError: false
-      }
-    }
-async componentDidMount() {
-  this.setState({isLoading: true})
- 
-  const response = await fetch("http://localhost:1300/searchcustomer/covidList")
+      users: [],
+      isLoading: false,
+      isError: false
+    };
+  }
 
-  if(response.ok)
-  {
-    const users = await response.json()
-      console.log(users[0])
-      this.setState({users, isLoading:false})
-    }
-    else
-    {
-      this.setState({isError:true, isLoading:false})
+  async componentDidMount() {
+    this.setState({ isLoading: true });
+    try {
+      const response = await fetch("http://localhost:1300/searchcustomer/covidList");
+      if (response.ok) {
+        const users = await response.json();
+        console.log('Fetched users:', users); // Debug log
+        this.setState({ users, isLoading: false });
+      } else {
+        throw new Error('Failed to fetch');
+      }
+    } catch (error) {
+      console.error('Fetch error:', error); // Debug log
+      this.setState({ isError: true, isLoading: false });
     }
   }
 
   renderTableRows = () => {
-    return this.state.users[0].map(user => {
+    if (!this.state.users[0] || !this.state.users[0].length) return null;
+    
+    return this.state.users[0].map((user, index) => {
       return (
-        <tr key={user.id}>
-          <td>{user.fname}</td>
-          <td>{user.lname}</td>
-          <td>{user.age}</td>
-          <td>{user.pincode}</td>
-          <td>{user.email}</td>
-          <td>{user.username}</td>
-          <td>{user.password}</td>
+        <tr key={index}>
+          <td>{user.username || 'N/A'}</td>
+          <td>{user.fname || 'N/A'}</td>
+          <td>{user.lname || 'N/A'}</td>
+          <td>{user.age || 'N/A'}</td>
+          <td>{user.pincode || 'N/A'}</td>
+          <td>{user.email || 'N/A'}</td>
         </tr>
-      )
-    })
-  }
-renderTableHeader = () => {
-    return Object.keys(this.state.users[0][0]).map(attr => <th key={attr}>{attr.toUpperCase()}</th>)
+      );
+    });
   }
 
-  
+  renderTableHeader = () => {
+    if (!this.state.users[0] || !this.state.users[0].length) return null;
+    
+    const headers = ['Username', 'First Name', 'Last Name', 'Age', 'Pincode', 'Email'];
+    return headers.map(header => <th key={header}>{header}</th>);
+  }
+
   render() {
-    const { users, isLoading, isError } = this.state
+    const { users, isLoading, isError } = this.state;
 
     if (isLoading) {
-      return <div>Loading...</div>
+      return (
+        <ResponsiveTableContainer>
+          <div>Loading...</div>
+        </ResponsiveTableContainer>
+      );
     }
 
     if (isError) {
-      return <div>Error</div>
+      return (
+        <ResponsiveTableContainer>
+          <div>Error loading data</div>
+        </ResponsiveTableContainer>
+      );
     }
 
-    return users.length > 0
-      ? (
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-        <table style={{border: "3px solid black",padding: "20px 16px"}}>
-          <caption style={{border: "3px solid black",padding: "20px 16px"}}><h1><b>CUSTOMERS ELIGIBLE FOR COVID VACCINE</b></h1>
-          Total records : {users[0].length}</caption>
-          <thead style={{backgroundColor: "#FF416C", border: "1px solid black", color: "white"}}>
-            <tr style={{border: "1px solid black", padding: "10px 8px"}}>
+    return users.length > 0 ? (
+      <ResponsiveTableContainer>
+        <ResponsiveTable>
+          <caption>
+            <h1><b>CUSTOMERS ELIGIBLE FOR COVID VACCINE</b></h1>
+            <div>Total records: {users[0]?.length || 0}</div>
+          </caption>
+          <thead>
+            <tr>
               {this.renderTableHeader()}
             </tr>
           </thead>
-          <tbody style={{backgroundColor: "#ffdde1", border: "1px solid blue", textAlign: "center", padding: "10px 8px"}}>
+          <tbody>
             {this.renderTableRows()}
           </tbody>
-        </table>
-        </div>
-      ) : (
-        <div>
-          No users.
-      </div>
-      )
+        </ResponsiveTable>
+      </ResponsiveTableContainer>
+    ) : (
+      <ResponsiveTableContainer>
+        <div>No eligible customers found</div>
+      </ResponsiveTableContainer>
+    );
   }
 }
           

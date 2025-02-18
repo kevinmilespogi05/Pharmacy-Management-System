@@ -185,16 +185,22 @@ export default function Medicine() {
                 <Medicinedata />
               </Paper>
             </Grid>
-            <Grid item xs={12} sm={12} md={4}>
+            <Grid item xs={12}>
               <Content>
-                <Addmedicine/>
-                <Updatemedicine/>
-                <Columnadd>
-                  <Searchmedicine/>
-                  <Position>
-                    {/* <Deletemedicine/> */}
-                  </Position>
-                </Columnadd>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={6}>
+                    <Addmedicine/>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Updatemedicine/>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Searchmedicine/>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Deletemedicine/>
+                  </Grid>
+                </Grid>
               </Content>
             </Grid>
           </Grid>        

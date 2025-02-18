@@ -2,26 +2,45 @@ import styled from 'styled-components'
 
 export const Footer = styled.footer`
   background-color: #101522;
-  height: 240px;
+  min-height: 240px;
   display: flex;
-  flex-flow: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+
+  @media screen and (max-width: 968px) {
+    padding: 30px 10px;
+  }
 `
+
 export const Image = styled.img`
-  max-width: 220px; 
-  width: 220px;   
-  left: 50px;
-  top : 10px;
+  max-width: 220px;
   width: 100%;
-  padding-right: 10;
-`;
+  height: auto;
+  margin: 10px;
+
+  @media screen and (max-width: 768px) {
+    max-width: 180px;
+  }
+
+  @media screen and (max-width: 480px) {
+    max-width: 150px;
+  }
+`
 
 export const Location = styled.div`
-  margin-top:20px;
+  margin: 20px;
   display: flex;
-  flex-flow: column;
-  margin-left:80px;
-  margin-right:60px;
+  flex-direction: column;
+  flex: 1;
+  min-width: 250px;
+
+  @media screen and (max-width: 768px) {
+    margin: 10px;
+    min-width: 200px;
+  }
 `
+
 export const Contact = styled.h3`
   color:#fff;
   margin: 4px;
