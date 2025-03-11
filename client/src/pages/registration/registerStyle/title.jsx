@@ -2,14 +2,24 @@ import styled from 'styled-components';
 // #038ea1
 
 export const Headline = styled.div`
-  background-color: #2980B9;
+  background-image: linear-gradient(to right,#00bf8f,#001510 );
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  min-height: 120px;
+  padding: 0 30px;
+  height: 120px;
   position: relative;
+  margin-bottom: 25px;
   z-index: 1;
+  :before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+  }
   text-align: center;
 `
 

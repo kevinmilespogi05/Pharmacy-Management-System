@@ -2,7 +2,7 @@ import React from 'react'
 import Icon1 from './../info/images/svg-1.svg'
 import Icon2 from './../info/images/svg-2.svg'
 import Icon3 from './../info/images/svg-3.svg'
-import Icon4 from './../info/images/svg-4.svg'
+import Icon5 from './../info/images/svg-5.svg'
 import {ServicesContainer, ServicesH1, ServicesWrapper, ServicesCard, ServicesIcon, ServicesH2, ServicesP} from './customerStyle'
 import {Link as LinkR} from 'react-router-dom'
 
@@ -27,7 +27,7 @@ const Functions = () => {
       path: "/medicine"
     },
     {
-      icon: Icon4,
+      icon: Icon5,
       title: "USER PROFILE",
       description: "View and update your profile information.",
       path: "/profile"

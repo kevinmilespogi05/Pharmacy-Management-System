@@ -17,9 +17,34 @@ router.post("/create", upload.single('profile_image'), async (req, res) => {
     const { fname, lname, age, pincode, email, username, password } = req.body;
     const profile_image = req.file ? req.file.buffer : null;
 
+    // Check if username already exists
+    const usernameCheck = await new Promise((resolve, reject) => {
+      db.query('SELECT username FROM customer WHERE username = ?', [username], (err, results) => {
+        if (err) reject(err);
+        resolve(results);
+      });
+    });
+
+    if (usernameCheck.length > 0) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    // Check if email already exists
+    const emailCheck = await new Promise((resolve, reject) => {
+      db.query('SELECT email FROM customer WHERE email = ?', [email], (err, results) => {
+        if (err) reject(err);
+        resolve(results);
+      });
+    });
+
+    if (emailCheck.length > 0) {
+      return res.status(400).json({ message: 'Email already registered' });
+    }
+
+    // If no duplicates found, proceed with registration
     const query = `
       INSERT INTO customer 
-      (fname, lname, age, pincode, email, username, password, profile_image) 
+      (fname, lname, age, pincode, email, username, password, profile_image)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
 

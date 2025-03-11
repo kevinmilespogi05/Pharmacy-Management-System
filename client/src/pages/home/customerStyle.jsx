@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom'
 
 
-
 export const Container = styled.div`
 display: flex;
 flex-wrap: wrap;
@@ -49,7 +48,7 @@ export const FrmContent = styled.div`
   height: 100%;
 `
 export const Frm = styled.form`
-  background-color: black;
+  background-color: white;
   width: 100%;
   height: 100%;
   display: flex;
@@ -61,7 +60,7 @@ export const FrmH1 = styled.h1`
   font-family: 'Encode Sans Expanded', sans-serif;
   margin-top:20px;
   margin-bottom:30px;
-  color: white;
+  color: #038ea1;
   font-size: 23px;
   font-weight: 400;
   text-align: center;
@@ -70,7 +69,7 @@ export const FrmLabel = styled.label`
   font-family: 'Encode Sans Expanded', sans-serif;
   margin-bottom: 8px;
   font-size: 14px;
-  color: white;
+  color: #333;
 `
 export const FrmInput = styled.input`
   padding: 16px 16px;
@@ -116,7 +115,7 @@ export const FrmButton = styled(Link)`
 `
 
 export const Formadd = styled.form`
-  background-color: navy;
+  background-color: white;
   width: 100%;
   z-index: 1;
   display: grid;
@@ -128,7 +127,7 @@ export const FormH1add = styled.h1`
   font-family: 'Encode Sans Expanded', sans-serif;
   margin-top:20px;
   margin-bottom:30px;
-  color: white;
+  color: #038ea1;
   font-size: 23px;
   font-weight: 400;
   text-align: center;

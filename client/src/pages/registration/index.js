@@ -9,6 +9,7 @@ import pharma from './images/pharma.png'
 import medicine from './images/medicine.png'
 import {Footer, Heading, Contact, Location, Image} from './registerStyle/FooterElements'
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -22,6 +23,7 @@ const Registration = () => {
     profile_image: null
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -67,21 +69,27 @@ const Registration = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const register = async (e) => {
     e.preventDefault();
-
-    const data = new FormData();
-    Object.keys(formData).forEach(key => {
-      data.append(key, formData[key]);
-    });
+    setError(''); // Clear any previous errors
 
     try {
-      const response = await fetch('http://localhost:1300/register/create', {
-        method: 'POST',
-        body: data
-      });
+      const formData = new FormData();
+      formData.append('fname', formData.fname);
+      formData.append('lname', formData.lname);
+      formData.append('age', formData.age);
+      formData.append('pincode', formData.pincode);
+      formData.append('email', formData.email);
+      formData.append('username', formData.username);
+      formData.append('password', formData.password);
+      if (formData.profile_image) {
+        formData.append('profile_image', formData.profile_image);
+      }
 
-      if (response.ok) {
+      const response = await axios.post('http://localhost:1300/register/create', formData);
+      
+      if (response.status === 200) {
+        // Registration successful
         Swal.fire({
           icon: 'success',
           title: 'Registration Successful',
@@ -100,16 +108,14 @@ const Registration = () => {
           profile_image: null
         });
         setImagePreview(null);
-      } else {
-        throw new Error('Registration failed');
       }
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Registration Failed',
-        text: 'Please try again later',
-        confirmButtonColor: '#038ea1'
-      });
+      if (error.response) {
+        // Server responded with an error
+        setError(error.response.data.message);
+      } else {
+        setError('Registration failed. Please try again.');
+      }
     }
   };
 
@@ -126,8 +132,9 @@ const Registration = () => {
       </ImgWrap>
      <FormWrap>
         <FormContent>
-          <Form onSubmit={handleSubmit}>
-            <FormH1>Register with us</FormH1>
+          <Form onSubmit={register}>
+            <FormH1>Create your account</FormH1>
+            {error && <div style={{color: 'red', marginBottom: '1rem'}}>{error}</div>}
             <div style={{ marginBottom: '20px', textAlign: 'center' }}>
               {imagePreview && (
                 <img 
@@ -185,10 +192,10 @@ const Registration = () => {
     <Image src = {loc} alt = {"alt"}></Image>
     <Location>
     <Heading>Contact details</Heading>
-    <Contact>Sunshine hospital</Contact>
-    <Contact>Surat city</Contact>
+    <Contact>Breathless Hospital</Contact>
+    <Contact>Olongapo city</Contact>
     <Contact>395007</Contact>
-    <Contact>Phone number: +91-7428640792</Contact>
+    <Contact>Phone number: +63-9428640792</Contact>
     </Location>
     <Image src = {pharma} alt = {"alt"}></Image>
     <Location>

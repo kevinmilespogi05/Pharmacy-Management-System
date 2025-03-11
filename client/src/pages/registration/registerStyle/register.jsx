@@ -36,7 +36,7 @@ export const FormContent = styled.div`
 `
 
 export const Form = styled.form`
-  background-color: black;
+  background-color: #f2f2f2;
   width: 100%;
   z-index: 1;
   display: grid;
@@ -54,7 +54,7 @@ export const FormH1 = styled.h1`
   font-family: 'Encode Sans Expanded', sans-serif;
   margin-top:20px;
   margin-bottom:30px;
-  color: white;
+  color: black;
   font-size: 23px;
   font-weight: 400;
   text-align: center;
@@ -64,7 +64,7 @@ export const FormLabel = styled.label`
   font-family: 'Encode Sans Expanded', sans-serif;
   margin-bottom: 8px;
   font-size: 14px;
-  color: white;
+  color: black;
 `
 
 export const FormInput = styled.input`
@@ -82,14 +82,15 @@ font-size: 14px;
 export const ImgWrap = styled.div`
   max-width: 600px;
   width: 100%;
-  padding: 0 20px;
+  padding: 20px;
+  background-color: #e8f5e9;  /* Light green color */
+  border-radius: 8px;
 
   @media screen and (max-width: 968px) {
     max-width: 500px;
     order: -1;
   }
 `
-
 export const Img = styled.img`
   width: 100%;
   margin-top: 50px;

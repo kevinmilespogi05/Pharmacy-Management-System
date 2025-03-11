@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Footer = styled.footer`
-  background-color: #101522;
+  background-image: linear-gradient(#141E30, #243B55);
   min-height: 240px;
   display: flex;
   flex-wrap: wrap;

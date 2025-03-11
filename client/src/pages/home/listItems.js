@@ -3,13 +3,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import SettingsIcon from '@material-ui/icons/Settings';
+import HomeIcon from '@material-ui/icons/Home';
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
+import GroupIcon from '@material-ui/icons/Group';
+import ReceiptIcon from '@material-ui/icons/Receipt';
+import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Link } from 'react-router-dom';
 import { 
   redirectHome, 
@@ -27,7 +26,7 @@ export const mainListItems = (
       window.location.href='/home';
       }}>
       <ListItemIcon>
-        <DashboardIcon />
+        <HomeIcon style={{ color: '#038ea1' }} />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
@@ -36,7 +35,7 @@ export const mainListItems = (
       window.location.href = '/medicine'
     }}>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <LocalHospitalIcon style={{ color: '#038ea1' }} />
       </ListItemIcon>
       <ListItemText primary="Medicines" />
     </ListItem>
@@ -45,13 +44,13 @@ export const mainListItems = (
       window.location.href='/customer';
       }}>
       <ListItemIcon>
-        <PeopleIcon />
+        <GroupIcon style={{ color: '#038ea1' }} />
       </ListItemIcon>
       <ListItemText primary="Customers" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <BarChartIcon />
+        <ReceiptIcon style={{ color: '#038ea1' }} />
       </ListItemIcon>
       <ListItemText primary="Transactions" button onClick = {(e)=>{
        e.preventDefault();
@@ -60,7 +59,7 @@ export const mainListItems = (
     </ListItem>
     <ListItem button onClick={redirectProfile}>      
       <ListItemIcon>
-        <AccountCircleIcon />
+        <PersonIcon style={{ color: '#038ea1' }} />
       </ListItemIcon>
       <ListItemText primary="Profile" />
     </ListItem>
@@ -75,7 +74,7 @@ export const Logout = (
       window.location.href='/';
       }}>
       <ListItemIcon>
-        <ExitToAppIcon/>
+        <ExitToAppIcon style={{ color: '#038ea1' }} />
       </ListItemIcon>
       <ListItemText primary="Logout" />
     </ListItem>
